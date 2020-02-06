@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Stock Market</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="stockmarket.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="jquery.webticker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse','#content').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $('img').toggle();
+            
+            });
+        });
+        $(document).ready(function(){
+            var watchListCounter = 1;
+            var googleData;
+            Papa.parse('daily_MSFT.csv', {
+              header: true,
+              download: true,
+              dynamicTyping: true,
+              complete: function(results) {
+                googleData = results.data.slice(0,15);
+              }
+            });
+
+            $('#watchListRow').on('click','.watchListClose',function() {
+              $(this).closest('.col-sm-4').remove();
+            });
+
+            $('#watchListAddButton').on('click',function() {
+                if(watchListCounter > 3){
+                    return;
+                }
+                $('#watchListRow').append('<div class="col-sm-4"><div class="card"><div class="card-body"><button type="button" class="close watchListClose" aria-label="Close"><span aria-hidden="true">&times;</span></button><h5 class="card-title">'+$('#watchListAddBarId').val()+'</h5><hr><canvas id="watchList'+watchListCounter+'"></canvas></div></div></div>');
+                $('#watchListAddBarId').val('');
+
+
+                var ctx = document.getElementById('watchList'+watchListCounter).getContext("2d")
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: googleData.map(a => a.timestamp),
+                        datasets: [{
+                            label: "Data",
+                            fill: 'origin',
+                            borderColor: "#80b6f4",
+                            pointBorderColor: "#80b6f4",
+                            pointBackgroundColor: "#80b6f4",
+                            pointHoverBackgroundColor: "#80b6f4",
+                            pointHoverBorderColor: "#80b6f4",
+                            pointBorderWidth: 10,
+                            pointHoverRadius: 10,
+                            pointHoverBorderWidth: 1,
+                            pointRadius: 1,
+                            fill: false,
+                            borderWidth: 4,
+                            data: googleData.map(a => a.open)
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    fontStyle: "bold",
+                                    maxTicksLimit: 5,
+                                    min : 130,
+                                    max : 150
+                                },
+                                gridLines: {
+                                    drawTicks: true,
+                                    display: false
+                                }
+                }],
+                            xAxes: [{
+                                gridLines: {
+                                    zeroLineColor: "transparent",
+                                    display : false
+                },
+                                ticks : {
+                                    display : false
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                watchListCounter++;
+
+            });
+
+        });
+    </script>
+
+<style type="text/css">
+    
+</style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" >
+            <div class="text-center" id="profilediv">
+            <h5>User Name</h5>
+            <img class="rounded-circle z-depth-2" alt="100x100" src="download.jpg" data-holder-rendered="true" id="profilepic"/>
+            <h6>Profile</h6>
+            <hr>
+          </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href='dashboard.html' id="dashboard">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fas fa-briefcase"></i>
+                        Watch List
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fas fa-copy"></i>
+                        My Stocks
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Transactions
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+                <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4" id="watchListAddBar">
+                    <div class="input-group watchListAddBar">
+                      <input type="search" placeholder="Add Stock's to Watch List" aria-describedby="button-addon1" class="form-control border-0 bg-light" id="watchListAddBarId" STYLE="background-color: #ffffff;" >
+                      <div class="input-group-append watchListAddBar">
+                        <button id="watchListAddButton" type="submit" class="btn btn-link text-primary"><i class="fa fa-plus"></i></button>
+                      </div>
+                    </div>
+              </div>
+
+
+            <div class="row" id="watchListRow">
+              
+            </div>
+
+    </div>
+</body>
+
+</html>

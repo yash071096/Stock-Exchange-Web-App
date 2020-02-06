@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Stock Market</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="stockmarket.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="jquery.webticker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse','#content').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $('#navbar').toggleClass('active');
+                $('img').toggle();
+            
+            });
+        });
+        $(document).ready(function()
+        {
+            $("#webticker-update-example").webTicker(
+            {
+                height:'100px'
+            });
+
+            var open = [];
+            var dates ; 
+            $.ajax({
+                url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo",
+                dataType: 'json',
+                success: function(result){
+                    console.log(result);
+                    var data = result["Time Series (Daily)"];
+                    dates = Object.keys(result["Time Series (Daily)"]);
+                    for (v of Object.values(data))
+                        open.push(parseFloat(v["1. open"] ));
+                    var trace = {
+                      x: dates,
+                      y: open,
+                      mode: 'lines'
+                    };
+                var data = [ trace];
+
+                Plotly.newPlot('stockPlotDiv', data);
+                }
+            });     
+
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="fixed-top" >
+            <div class="text-center" id="profilediv">
+            <h5>User Name</h5>
+            <img class="rounded-circle z-depth-2" alt="100x100" src="download.jpg" data-holder-rendered="true" id="profilepic"/>
+            <h6>Profile</h6>
+            <hr>
+          </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href='dashboard.html' id="dashboard">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="watchlist.html">
+                        <i class="fas fa-briefcase"></i>
+                        Watch List
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-toggle="collapse">
+                        <i class="fas fa-copy"></i>
+                        My Stocks
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Transactions
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-image"></i>
+                        Analytics
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="navbar">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="wallet">
+                                    <i class="fa fa-wallet fa-lg"></i> Wallet <span class="badge badge-success">$100.00</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="cart">
+                                    <i class="fa fa-shopping-cart fa-lg"></i> Cart <span class="badge badge-pill badge-primary">3</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="logout">
+                                    <i class="fa fa-sign-out-alt fa-lg"></i>Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div id="stocksdata">
+                <div class="container-fluid" id="containerdiv">
+                        <div class="card" id="cardtickerdiv">
+                            <div class="card-body">
+                                <ul id="webticker-update-example" class="tic-hover" >
+                                    <li class="cardscroll" >
+                                        <div>NSEI</div>
+                                        <div><span class="text-success">Open</span>:11,879.20$</div>
+                                        <div><span class="text-danger">High</span>:11,932.65$</div>
+                                        <div><span Class="text-danger">Low</span>:11,853.95$</div>
+           
+                                    </li>   
+                                    <li class="cardscroll">
+                                        <div>BSESN</div>
+                                        <div><span class="text-success">Open</span>:40,316.50$</div>
+                                        <div><span class="text-danger">High</span>:40,417.44$</div>
+                                        <div><span Class="text-danger">Low</span>:40,157.97$</div>
+                                    </li>  
+                                    <li class="cardscroll">
+                                        <div>WMT</div>
+                                        <div><span class="text-success">Open</span>:118.70$</div>
+                                        <div><span class="text-danger">High</span>:119.63$</div>
+                                        <div><span Class="text-danger">Low</span>:118.28$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>COST</div>
+                                        <div><span class="text-success">Open</span>:301.55$</div>
+                                        <div><span class="text-danger">High</span>:302.33$</div>
+                                        <div><span Class="text-danger">Low</span>:299.71$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>TGT</div>
+                                        <div><span class="text-success">Open</span>:110.63$</div>
+                                        <div><span class="text-danger">High</span>:110.86$</div>
+                                        <div><span Class="text-danger">Low</span>:109.76$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>SHLX</div>
+                                        <div><span class="text-success">Open</span>:20.30$</div>
+                                        <div><span class="text-danger">High</span>:20.30$</div>
+                                        <div><span Class="text-danger">Low</span>:19.84$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>EXHL</div>
+                                        <div><span class="text-success">Open</span>:0.01$</div>
+                                        <div><span class="text-danger">High</span>:0.03$</div>
+                                        <div><span Class="text-danger">Low</span>:0.03$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>CDR</div>
+                                        <div><span class="text-success">Open</span>:2.77$</div>
+                                        <div><span class="text-danger">High</span>:2.91$</div>
+                                        <div><span Class="text-danger">Low</span>:2.74$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>AMZN</div>
+                                        <div><span class="text-success">Open</span>:1,778.00$</div>
+                                        <div><span class="text-danger">High</span>:1,780.00$</div>
+                                        <div><span Class="text-danger">Low</span>:1,767.13$</div>
+                                     </li>
+                                     <li class="cardscroll">
+                                        <div>GS</div>
+                                        <div><span class="text-success">Open</span>:220.90$</div>
+                                        <div><span class="text-danger">High</span>:221.41$</div>
+                                        <div><span Class="text-danger">Low</span>:218.52$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>INTC</div>
+                                        <div><span class="text-success">Open</span>:57.97$</div>
+                                        <div><span class="text-danger">High</span>:58.50$</div>
+                                        <div><span Class="text-danger">Low</span>:57.90$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>Daw Jones</div>
+                                        <div><span class="text-success">Open</span>:27,580.70$</div>
+                                        <div><span class="text-danger">High</span>:27,714.39$</div>
+                                        <div><span Class="text-danger">Low</span>:27,517.67$</div>
+                                    </li>  
+                                    <li class="cardscroll">
+                                        <div>AAPL</div>
+                                        <div><span class="text-success">Open</span>:258.30$</div>
+                                        <div><span class="text-danger">High</span>:262.46$</div>
+                                        <div><span Class="text-danger">Low</span>:258.28$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>BAC</div>
+                                        <div><span class="text-success">Open</span>:33.04$</div>
+                                        <div><span class="text-danger">High</span>:33.25$</div>
+                                        <div><span Class="text-danger">Low</span>:32.97$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>SBUX</div>
+                                        <div><span class="text-success">Open</span>:81.75$</div>
+                                        <div><span class="text-danger">High</span>:82.30$</div>
+                                        <div><span Class="text-danger">Low</span>:81.37$</div>
+                                    </li> 
+                                    <li class="cardscroll">
+                                        <div>NKE</div>
+                                        <div><span class="text-success">Open</span>:89.37$</div>
+                                        <div><span class="text-danger">High</span>:90.10$</div>
+                                        <div><span Class="text-danger">Low</span>:89.37$</div>
+                                    </li> 
+                                </ul>
+                             </div>
+                             </div>
+                                <div class="box box-transparent no-shadow" id="stockdetailsdiv">
+                                    <div class="box-body" id="stockdetail">
+                                        <div class="d-md-flex justify-content-between align-items-center d-inline-block">
+                                            <h2 class="my-0">StockName</h2>
+                                                <div>
+                                                    <p class="mb-2 text-fade">Open Price</p>
+                                                    <h4 class="mb-0"><span class="text-success">0.24$</span></h4>
+                                                </div>
+                                                 <div class="d-lg-block d-none">
+                                                    <p class="mb-2 text-fade">Low Price</p>
+                                                    <h4 class="mb-0"><span class="text-success">0.45$</span></h4>
+                                                </div>
+                                                <div class="d-lg-block d-none">
+                                                    <p class="mb-2 text-fade">High Price</p>
+                                                    <h4 class="mb-0"><span class="ml-2 text-dark">0.21$</span></h4>
+                                                </div>
+                                                <div class="d-lg-block d-none">
+                                                    <p class="mb-2 text-fade">Prev Day Close</p>
+                                                    <h4 class="mb-0"><span class="ml-2 text-danger">0.11$</span></h4>
+                                                </div>
+                                                <div>
+                                                    <p class="mb-2 text-fade">Prev Day Start</p>
+                                                    <h4 class="mb-0"><span class="ml-2 text-dark">142.21$</span></h4>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+
+
+            <div id="stocksListAndPlotArea">
+                
+                </br>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="card" style="width: 25rem;">
+                          <div class="card-body">
+                            <h5 class="card-title">Stocks</h5>
+                                    <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4" id="stockListBar">
+                                    <div class="input-group">
+                                      <input type="search" placeholder="Search Stock's" aria-describedby="button-addon1" class="form-control border-0 bg-light" id="stockListBarId">
+                                      <div class="input-group-append">
+                                        <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                            <div class="list-group list-group-flush">
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Google
+                                <span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Apple <span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Microsoft 
+                                    <span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Facebook<span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Amazon <span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Apple<span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Microsoft<span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Facebook<span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                              <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">Amazon<span id="span">
+                                    <span id="span"><i class="fa fa-chart-line"  style="color:#3cba54;"></i></span>
+                                    <i class="fa fa-shopping-cart" style="color:#FF5733;"></i></span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="card" style="width: 40rem;">
+                              <div class="card-body">
+                                <div id="stockPlotDiv">
+                                    
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+</html>

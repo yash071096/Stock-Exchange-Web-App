@@ -1,0 +1,474 @@
+/*
+    DEMO STYLE
+*/
+
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    font-weight: 400;
+    font-size: 13px;
+    color: #67757c;
+
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+
+.navbar {
+    margin-left: 250px;
+    padding: 15px 10px;
+    background: #fff !important;
+    border: none;
+    border-radius: 0;
+    margin-right: -16px;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+i,
+span {
+    display: inline-block;
+}
+
+/* ---------------------------------------------------
+    card style
+----------------------------------------------------- */
+#containerdiv
+{
+    border-radius: 0;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+
+}
+
+#webticker-update-example
+      {
+            position: relative;
+            overflow: hidden;
+            float: left;
+            font: bold 10px Verdana;
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+            width: 3177.2px;
+            transition-timing-function: linear;
+            transition-duration: 0s;
+            left: 0px;
+      }
+
+.card-body ul li 
+{
+    white-space: nowrap;
+    float: left;
+    padding: 0px 7px !important;
+    line-height: 24px !important;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+
+
+.tic-hover li:hover {
+    background-color: #242a33 !important;
+}
+
+.tic-hover li
+      {
+        padding: 10px !important;
+        border-radius: 10px;
+      }
+/* ---------------------------------------------------
+    stock details style
+----------------------------------------------------- */
+      #stockdetail
+      {
+        padding: 1.25rem;
+        border-radius: 5px;
+
+      }
+#stockdetailsdiv
+{
+    margin-top: 10px;
+}
+
+
+/* ---------------------------------------------------
+    profile pic
+----------------------------------------------------- */
+       #profilepic {
+        border-radius: 50%!important;
+        width: 8em;
+        height: 8em;
+        -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)!important;
+        box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19)!important;
+      }
+
+#profilediv
+{
+    margin-top: 20px !important;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #232a33;
+    color: #fff;
+    transition: all 0.3s;
+    height: 100%;
+}
+
+#sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+#sidebar.active .sidebar-header h3,
+#sidebar.active .CTAs {
+    display: none;
+}
+
+#sidebar.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebar ul li a {
+    text-align: left;
+}
+
+#sidebar.active ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+#sidebar.active ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+#sidebar.active ul ul a {
+    padding: 10px !important;
+}
+
+#sidebar.active .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    /*border-bottom: 1px solid #47748b;*/
+}
+
+#sidebar ul li a {
+    padding: 16px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #303030;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: calc(100% - 265px);
+    padding-bottom: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    top:0;
+    right: 0;
+    margin-left: 250px;
+    margin-top: 100px;
+}
+
+#content.active {
+    width: calc(100% - 95px);
+    margin-left: 80px;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+    #sidebar {
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+    .dropdown-toggle::after {
+        top: auto;
+        bottom: 10px;
+        right: 50%;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+    #sidebar.active {
+        margin-left: 0 !important;
+    }
+    #sidebar .sidebar-header h3,
+    #sidebar .CTAs {
+        display: none;
+    }
+    #sidebar .sidebar-header strong {
+        display: block;
+    }
+    #sidebar ul li a {
+        padding: 20px 10px;
+    }
+    #sidebar ul li a span {
+        font-size: 0.85em;
+    }
+    #sidebar ul li a i {
+        margin-right: 0;
+        display: block;
+    }
+    #sidebar ul ul a {
+        padding: 10px !important;
+    }
+    #sidebar ul li a i {
+        font-size: 1.3em;
+    }
+    #sidebar {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+
+
+
+
+
+/* ---------------------------------------------------
+    watchlist
+----------------------------------------------------- */
+
+
+#watchListClose {
+  cursor: pointer;
+}
+
+#watchListAddBar{
+    padding: .25rem!important;
+    margin-bottom: 1.5rem!important;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    border-radius: 50rem!important;
+    background-color: #ffffff!important;
+}
+
+#watchListAddBarId{
+    border:0;
+    outline:none;
+    box-shadow:none;
+    background-color: #fff!important;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.input-group{
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group-append{
+    margin-left: -1px;
+}
+
+
+
+
+/* ---------------------------------------------------
+    Stocks List and Plot Area
+----------------------------------------------------- */
+
+#stockListBar{
+    padding: .25rem!important;
+    margin-bottom: 1.5rem!important;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    border-radius: 50rem!important;
+}
+
+
+#stockListBarId{
+    border:0;
+    outline:none;
+    box-shadow:none;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.list-group{
+    max-height: 246px;
+    margin-bottom: 10px;
+    overflow:hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+
+
+.list-group::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+.list-group::-webkit-scrollbar-track {
+  background: #d3d3d3; 
+}
+ 
+/* Handle */
+.list-group::-webkit-scrollbar-thumb {
+  background: #1E90FF; 
+}
+
+/* Handle on hover */
+.list-group::-webkit-scrollbar-thumb:hover {
+  background: #1E90FF; 
+}
+
+.list-group:hover{
+     overflow-y:scroll!important;
+}
+
+
+#span {
+  display: none;
+}
+
+a:hover span {
+  display: inline!important;
+}
+
+
+/*added*/
+
+#navbar.active
+{
+   margin-left: 80px; 
+}
+
